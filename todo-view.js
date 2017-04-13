@@ -2,6 +2,8 @@ var TodoView = function (model) {
     // View kennt Model
     this.model = model;
     this.addTodoSubject = new Observable(this);
+    this.selectTodoSubject = new Observable(this);
+    this.unselectTodoSubject = new Observable(this);
     this.init();
 };
 
@@ -16,6 +18,8 @@ TodoView.prototype = {
 
         // Event-Handler am Button registrieren
         this.$addTodoButton.click(this.addTodoButtonClicked.bind(this));
+        // Event-Handler an ToDo-Checkboxen registrieren
+        this.$container.on('click', '.todo', this.selectOrUnselectTodo.bind(this));
 
         // beim Model auf neue hinzugefuegte ToDos lauschen
         this.model.addTodoSubject.register(this.refreshTodoList.bind(this));
@@ -28,6 +32,22 @@ TodoView.prototype = {
             todo: this.$todoTextBox.val()
         });
         this.$todoTextBox.val('');
+    },
+
+    selectOrUnselectTodo: function () {
+        var todoIndex = $(event.target).attr("data-index");
+
+        if ($(event.target).attr('data-task-selected') == 'false') {
+            $(event.target).attr('data-task-selected', true);
+            this.selectTodoSubject.notify({
+                todoIndex: todoIndex
+            });
+        } else {
+            $(event.target).attr('data-task-selected', false);
+            this.unselectTodoSubject.notify({
+                todoIndex: todoIndex
+            });
+        }
     },
 
     refreshTodoList: function () {

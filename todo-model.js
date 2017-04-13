@@ -1,5 +1,6 @@
  var TodoModel = function () {
      this.todos = [ ];
+     this.selectedTodos = [];
      
      this.addTodoSubject = new Observable(this);
  };
@@ -14,6 +15,16 @@
 
          // lauschende Observer informieren
          this.addTodoSubject.notify();
+     },
+
+     selectTodo: function (todoIndex) {
+         this.selectedTodos.push(todoIndex);
+         console.log(todoIndex + " selected");
+     },
+
+     unselectTodo: function (todoIndex) {
+         this.selectedTodos.splice(todoIndex, 1);
+         console.log(todoIndex + " unselected");
      },
 
      // Lesen der aktuellen ToDos
