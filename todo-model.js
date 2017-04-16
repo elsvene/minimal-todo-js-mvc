@@ -6,10 +6,10 @@
 
  TodoModel.prototype = {
 
-     addTodo: function (task) {
+     addTodo: function (todo) {
          // neues ToDo hinzufuegen
          this.todos.push({
-             name: task
+             name: todo
          });
 
          // lauschende Observer informieren
