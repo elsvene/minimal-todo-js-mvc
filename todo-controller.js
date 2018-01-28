@@ -1,4 +1,4 @@
-var TodoController = function (model, view) {
+function TodoController(model, view) {
     // Controller kennt Model und View
     this.model = model;
     this.view = view;
@@ -9,7 +9,7 @@ TodoController.prototype = {
 
     init: function () {
         // beim View auf neue hinzugefuegte ToDos lauschen
-        this.view.addTodoSubject.register(this.addTodo.bind(this));
+        this.view.addTodoSubject.register(x => this.addTodo(x));
     },
 
     addTodo: function (args) {

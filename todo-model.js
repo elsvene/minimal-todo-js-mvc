@@ -1,24 +1,24 @@
- var TodoModel = function () {
-     this.todos = [ ];
-     
-     this.addTodoSubject = new Observable(this);
- };
+function TodoModel() {
+    this.todos = [];
 
- TodoModel.prototype = {
+    this.addTodoSubject = new Observable(this);
+};
 
-     addTodo: function (todo) {
-         // neues ToDo hinzufuegen
-         this.todos.push({
-             name: todo
-         });
+TodoModel.prototype = {
 
-         // lauschende Observer informieren
-         this.addTodoSubject.notify();
-     },
+    // Neues ToDo hinzufuegen
+    addTodo: function(todo) {
+        this.todos.push({
+            name: todo
+        });
 
-     // Lesen der aktuellen ToDos
-     getTodos: function () {
-         return this.todos;
-     }
+        // lauschende Observer informieren
+        this.addTodoSubject.notify();
+    },
 
- };
+    // Lesen der aktuellen ToDos
+    getTodos: function() {
+        return this.todos;
+    }
+
+};

@@ -1,4 +1,4 @@
-var TodoView = function (model) {
+function TodoView(model) {
     // View kennt Model
     this.model = model;
     this.addTodoSubject = new Observable(this);
@@ -15,10 +15,10 @@ TodoView.prototype = {
         this.$todoContainer = this.$container.find('.todo-container');
 
         // Event-Handler am Button registrieren
-        this.$addTodoButton.click(this.addTodoButtonClicked.bind(this));
+        this.$addTodoButton.click(() => this.addTodoButtonClicked());
 
         // beim Model auf neue hinzugefuegte ToDos lauschen
-        this.model.addTodoSubject.register(this.refreshTodoList.bind(this));
+        this.model.addTodoSubject.register(() => this.refreshTodoList());
 
         return this;
     },
@@ -32,17 +32,16 @@ TodoView.prototype = {
 
     refreshTodoList: function () {
         // Liste der ToDos vom Model lesen
-        var todos = this.model.getTodos();
+        const todos = this.model.getTodos();
         
-        // HTML erzeugen in das "todo-container"-Element einhaengen (DOM-Manipulation)
-        var html = "";
-        var $todoContainer = this.$todoContainer;
+        // HTML erzeugen und in das "todo-container"-Element einhaengen (DOM-Manipulation)
+        const $todoContainer = this.$todoContainer;
 
         $todoContainer.html('');
 
-        var index = 0;
-        for (var todo in todos) {
-            $todoContainer.append(html + "<div><label><input type='checkbox' class='todo' data-index='" + index + "' data-task-selected='false'>" + todos[todo].name + "</label></div>");
+        let index = 0;
+        for (let todo in todos) {
+            $todoContainer.append("<div><label><input type='checkbox' class='todo' data-index='" + index + "' data-task-selected='false'>" + todos[todo].name + "</label></div>");
             index++;
         }
     }

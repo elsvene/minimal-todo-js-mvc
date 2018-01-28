@@ -1,4 +1,4 @@
-var Observable = function () {
+function Observable () {
     this.observers = [];
 };
 
